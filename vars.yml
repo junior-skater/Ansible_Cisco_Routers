@@ -1,7 +1,0 @@
----
-commands:
- - 3 service deny
- - 4 service deny
-parents: 
- - policy-map type control pedro
- - class type control always event access-reject

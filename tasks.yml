@@ -1,6 +1,0 @@
----  
-   - name: sending config commands
-     cisco.ios.ios_config: 
-       lines: "{{ item }}"
-       parents: "{{parents}}" 
-     loop: "{{commands}}"

@@ -1,3 +1,0 @@
-[Routers]
-r1  ansible_user=ansible	ansible_network_os=cisco.ios.ios
-#r1	   
