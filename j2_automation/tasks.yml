@@ -1,0 +1,4 @@
+---  
+   - name: sending config commands
+     cisco.ios.ios_config: 
+       src: commands.j2
