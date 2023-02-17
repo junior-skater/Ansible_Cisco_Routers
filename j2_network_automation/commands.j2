@@ -1,2 +1,5 @@
-hostname test
-no ip domain-lookup
+hostname "{{ vars[inventory_hostname].hostname }}"
+no ip domain lookup
+int loo0
+ip add {{ vars[inventory_hostname].loo_cero }}
+ntp server 10.10.10.10

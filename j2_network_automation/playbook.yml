@@ -1,12 +1,13 @@
 ---
 - name: configuring router
   hosts: Routers
-  connection: ansible.netcommon.network_cli
   gather_facts: false
-  # vars_files:
-  # - vars.yml
   tasks:
     - ansible.builtin.debug:
-        msg: task1
-    - import_tasks: tasks.yml
+        msg: initial config for routers
+    - include_vars:  
+        file: vars.yml
+    - name: sending config commands
+      cisco.ios.ios_config: 
+        src: commands.j2
     

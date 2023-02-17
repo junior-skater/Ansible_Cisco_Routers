@@ -1,3 +1,13 @@
 [Routers]
-r1  ansible_user=ansible	ansible_network_os=cisco.ios.ios
-#r1	   
+r1	
+r2
+r3
+r4
+
+
+
+[Routers:vars]
+ansible_user=ansible
+ansible_password=ansible
+ansible_network_os=cisco.ios.ios
+ansible_connection=ansible.netcommon.network_cli

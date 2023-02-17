@@ -1,0 +1,16 @@
+---  
+r1:
+  hostname: prueba1
+  loo_cero: 1.1.1.1 255.255.255.0 
+
+r2:
+  hostname: prueba2
+  loo_cero: 2.2.2.2 255.255.255.0
+
+r3:
+  hostname: prueba3
+  loo_cero: 7.7.7.7 255.255.255.0
+
+r4:
+  hostname: prueba4
+  loo_cero: 4.4.4.4  255.255.255.0
