@@ -1,0 +1,185 @@
+!
+!
+!
+!
+!
+voice service voip
+ allow-connections h323 to h323
+ allow-connections h323 to sip
+ allow-connections sip to h323
+ allow-connections sip to sip
+ no supplementary-service sip moved-temporarily
+ no supplementary-service sip refer
+ no supplementary-service sip handle-replaces
+ fax protocol t38 version 0 ls-redundancy 0 hs-redundancy 0 fallback none
+ sip
+  bind control source-interface GigabitEthernet0/0/0
+  bind media source-interface GigabitEthernet0/0/0
+  registrar server
+  midcall-signaling passthru
+!
+voice class codec 1
+ codec preference 1 g711ulaw
+ codec preference 2 g711alaw
+ codec preference 3 g729r8
+ codec preference 4 g729br8
+ codec preference 5 g722-64
+!
+!
+!
+!
+voice class server-group 1
+ ipv4 172.23.200.12 preference 4
+ ipv4 172.23.200.13 preference 3
+ ipv4 172.23.200.14 preference 2
+ ipv4 172.23.200.15 preference 1
+!
+!
+!
+voice register global
+ mode esrst
+ no allow-hash-in-dn
+ timeouts interdigit 7
+ system message SRST MODE
+ max-dn 20
+ max-pool 10
+ timezone 54
+!
+voice register pool  1
+ id network 172.31.7.0 mask 255.255.255.0
+ no digit collect kpml
+ voice-class codec 1
+!
+voice hunt-group 1 parallel
+ list 34074,34075
+ pilot 3407
+ description *** SRST HUNT GROUP *** 
+!
+!
+!
+!
+voice translation-profile INCOMING
+!
+!
+!
+!
+voice-card 0/1
+ no watchdog
+!
+!
+!
+!
+!
+!
+!
+!
+interface GigabitEthernet0/0/0
+ ip address 172.31.7.254 255.255.255.0
+ negotiation auto
+!
+interface GigabitEthernet0/0/1
+ no ip address
+ shutdown
+ negotiation auto
+!
+interface Service-Engine0/1/0
+!
+interface GigabitEthernet0
+ vrf forwarding Mgmt-intf
+ no ip address
+ shutdown
+ negotiation auto
+!
+ip forward-protocol nd
+ip http server
+ip http authentication local
+ip http secure-server
+ip tftp source-interface GigabitEthernet0
+ip route 0.0.0.0 0.0.0.0 172.31.7.1
+ip ssh version 2
+!
+!
+!
+!
+!
+!
+!
+control-plane
+!
+!
+voice-port 0/1/0
+ connection plar 3407
+ description *** ANALOG LINE ***
+!
+voice-port 0/1/1
+!
+mgcp behavior rsip-range tgcp-only
+mgcp behavior comedia-role none
+mgcp behavior comedia-check-media-src disable
+mgcp behavior comedia-sdp-force disable
+!
+mgcp profile default
+!
+!
+!
+!
+telephony-service
+ max-ephones 10
+ max-dn 10
+ ip source-address 172.31.7.254 port 2000
+ max-conferences 8 gain -6
+ transfer-system full-consult
+ create cnf-files version-stamp Jan 01 2002 00:00:00
+!
+!         
+dial-peer voice 1 voip
+ description *** TO CCUCM ***
+ destination-pattern 3407
+ session protocol sipv2
+ session server-group 1
+ incoming called-number .
+ voice-class codec 1  
+ voice-class sip options-keepalive up-interval 5 down-interval 20 retry 1
+ voice-class sip bind control source-interface GigabitEthernet0/0/0
+ voice-class sip bind media source-interface GigabitEthernet0/0/0
+ dtmf-relay rtp-nte sip-kpml
+ ip qos dscp cs3 signaling
+ no vad
+!
+dial-peer voice 2 pots
+ description *** CELL PHONES ***
+ destination-pattern 918[024]9.......$
+ port 0/1/0
+ forward-digits 11
+!
+dial-peer voice 3 pots
+ description *** LOCAL CALLS ***
+ destination-pattern 98[024]9.......$
+ port 0/1/0
+ forward-digits 10
+!
+!
+sip-ua 
+ retry invite 3
+ timers trying 100
+ registrar 1 ipv4:172.23.200.15 expires 60
+ registrar 2 ipv4:172.23.200.14 expires 60
+ registrar 3 ipv4:172.23.200.13 expires 60
+ registrar 4 ipv4:172.23.200.12 expires 60
+!
+!
+line con 0
+ stopbits 1
+line aux 0
+ stopbits 1
+line vty 0 5
+ login local
+ transport input ssh
+!
+!
+!         
+!
+!
+!
+end
+

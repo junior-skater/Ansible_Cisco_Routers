@@ -1,13 +1,40 @@
 [Routers]
-r1	
-r2
-r3
-r4
+Higuey						
+San_Cristobal		
+#Barahona		
+#San_Juan		
+San_Fco_de_Macoris		
+Comendador			
+Cotui					
+#La_Vega					
+Santiago_Rodriguez				
+Montecristi				
+Puerto_Plata					
+Nagua					
+Villa_Riva			
+El_Seibo			
+Santiago			
+#San_Jose_Ocoa		
+#Azua					
+#Bani				
+Valverde_Mao			
+Arenoso					
+Hato_Mayor			
+Moca					
+Samana				
+Bonao				
+#Neiba					
+Dajabon				
+San_Jose_Matas			
+#Rio_San_Juan			
+Salcedo			
+Monte_Plata			
+Constanza			
 
 
 
 [Routers:vars]
-ansible_user=ansible
-ansible_password=ansible
+ansible_user=
+ansible_password=
 ansible_network_os=cisco.ios.ios
-ansible_connection=ansible.netcommon.network_cli
+ansible_connection=ansible.netcommon.network_cli	
