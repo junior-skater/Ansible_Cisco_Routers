@@ -1,8 +1,0 @@
-[win]
-windows.example.com
-
-[win:vars]
-ansible_user=ansible
-ansible_password=xxx
-ansible_connection=winrm
-ansible_winrm_server_cert_validation=ignore
